@@ -1,0 +1,68 @@
+﻿@model IEnumerable<MvcNetCoreProceduresEF.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Index";
+    var especialidades = ViewData["Especialidades"] as List<string>;
+
+}
+
+<h1>Index</h1>
+
+<form method="post">
+    <label>Seleccione especialidad</label>
+    <select class="form-select" name="especialidad">
+        @foreach (var especialidad in especialidades)
+        {
+            <option value="@especialidad" >@especialidad</option>
+        }
+    </select>
+    <label>Incremento Salarial</label>
+    <input type="number" name="incremento" class="form-control" />
+    <br />
+    <button class="btn btn-warning">
+        Incrementar Salarios
+    </button>
+</form>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdDoctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Especialidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Salario)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdDoctor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Especialidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salario)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
