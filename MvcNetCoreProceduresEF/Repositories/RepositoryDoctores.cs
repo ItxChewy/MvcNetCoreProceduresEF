@@ -41,33 +41,37 @@ namespace MvcNetCoreProceduresEF.Repositories
 
         public async Task<List<Doctor>> GetDoctoresAsync()
         {
-            using(DbCommand com =
-                this.context.Database.GetDbConnection().CreateCommand())
-            {
-                string sql = "SP_GET_DOCTORES";
-                com.CommandType = CommandType.StoredProcedure;
-                com.CommandText = sql;
-                await com.Connection.OpenAsync();
-                DbDataReader reader = await com.ExecuteReaderAsync();
-                List<Doctor> doctores = new List<Doctor>();
-                while(await reader.ReadAsync())
-                {
-                    Doctor doctor = new Doctor
-                    {
-                        Codigo = int.Parse(reader["HOSPITAL_COD"].ToString()),
-                        IdDoctor = int.Parse(reader["DOCTOR_NO"].ToString()),
-                        Apellido = reader["APELLIDO"].ToString(),
-                        Especialidad = reader["ESPECIALIDAD"].ToString(),
-                        Salario = int.Parse(reader["SALARIO"].ToString())
+            string sql = "SP_GET_DOCTORES";
 
-                    };
-                    doctores.Add(doctor);
-                }
-                await reader.CloseAsync();
-                await com.Connection.CloseAsync();
-                return doctores;
+            var consulta = await this.context.Doctores.FromSqlRaw(sql).ToListAsync();
+            return consulta;
+            //using(DbCommand com =
+            //    this.context.Database.GetDbConnection().CreateCommand())
+            //{
+            //    string sql = "SP_GET_DOCTORES";
+            //    com.CommandType = CommandType.StoredProcedure;
+            //    com.CommandText = sql;
+            //    await com.Connection.OpenAsync();
+            //    DbDataReader reader = await com.ExecuteReaderAsync();
+            //    List<Doctor> doctores = new List<Doctor>();
+            //    while(await reader.ReadAsync())
+            //    {
+            //        Doctor doctor = new Doctor
+            //        {
+            //            Codigo = int.Parse(reader["HOSPITAL_COD"].ToString()),
+            //            IdDoctor = int.Parse(reader["DOCTOR_NO"].ToString()),
+            //            Apellido = reader["APELLIDO"].ToString(),
+            //            Especialidad = reader["ESPECIALIDAD"].ToString(),
+            //            Salario = int.Parse(reader["SALARIO"].ToString())
 
-            }
+            //        };
+            //        doctores.Add(doctor);
+            //    }
+            //    await reader.CloseAsync();
+            //    await com.Connection.CloseAsync();
+            //    return doctores;
+
+            //}
         }
         public async Task<List<string>> GetEspecialidadesAsync()
         {
