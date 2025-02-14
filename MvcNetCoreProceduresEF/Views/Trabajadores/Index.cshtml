@@ -1,0 +1,67 @@
+﻿@model TrabajadoresModel
+
+@{
+    ViewData["Title"] = "Index";
+    var oficios = ViewData["oficios"] as List<string>;
+}
+
+<h1>View Trabajadores</h1>
+<form method="post">
+    <label>Seleccione oficio</label>
+    <select name="oficio" class="form-select">
+        @foreach(string oficio in oficios){
+            <option value="@oficio">@oficio</option>
+        }
+    </select>
+    <br />
+    <button class="btn btn-primary">Buscar Trabajadores</button>
+</form>
+<br />
+<ul class="list-group">
+    <li class="list-group-item">
+        Personas: @Model.Personas
+    </li>
+    <li class="list-group-item">
+        Media Salarial: @Model.MediaSalarial
+    </li>
+    <li class="list-group-item">
+        Suma Salarial: @Model.SumaSalarial
+    </li>
+</ul>
+<br />
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+               ID Trabajador
+            </th>
+            <th>
+               Apellido
+            </th>
+            <th>
+               Oficio
+            </th>
+            <th>
+                Salario
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Trabajadores) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTrabajador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Oficio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salario)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
